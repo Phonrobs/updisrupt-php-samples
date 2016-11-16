@@ -23,7 +23,7 @@ $username = $_POST["username"];
 $password = $_POST["password"];
 
 $server = "ldap://up.local";
-$fullUsername = $username."@up.local";
+$fullUsername = $username;
 
 $result = check_login($server, $fullUsername, $password);
 
