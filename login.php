@@ -13,25 +13,23 @@
 <body>
 
 <div class="container">
-    <form class="form-horizontal" action="do_login.php" method="post">
-  <div class="form-group">
-    <label class="col-sm-2 control-label">UP Username</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" name="username" required>
+    <div class="jumbotron">
+      <h1>Login using UP Office 365 account</h1>
+      <?php
+        $authEndpoint = "https://login.microsoftonline.com/d7cbbb08-47a3-4bd7-8347-5018f2744cfb/oauth2/authorize";
+        $clientId = "c7b87e3c-b9a1-4655-bfc6-73b886e5a4eb";
+        $replyUrl = "http://localhost/phpsamples/do_login.php";
+
+        // create Office 365 login page URL
+        // with Tenant up.ac.th (for University of Phayao only)
+        // with client_id from Azure AD
+        // with redirect_uri that match Reply URI in Azure AD
+        $url = $authEndpoint."?client_id=".$clientId."&redirect_uri=".$replyUrl."&response_type=code&scope=openid User.Read";
+        
+        // show login link
+        echo '<p><a class="btn btn-primary btn-lg" href="'.$url.'" role="button">Click to login</a></p>'; 
+      ?>
     </div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-2 control-label">UP Password</label>
-    <div class="col-sm-10">
-      <input type="password" class="form-control" name="password" requied>
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-default">Login</button>
-    </div>
-  </div>
-</form>
 </div>
 
     <script
