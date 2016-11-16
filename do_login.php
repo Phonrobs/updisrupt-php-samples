@@ -22,7 +22,7 @@ function check_login($serv, $uname, $upass) {
 $username = $_POST["username"];
 $password = $_POST["password"];
 
-$server = "AZUP-DC-01";
+$server = "ldap://AZUP-DC-01";
 $fullUsername = $username;
 
 $result = check_login($server, $fullUsername, $password);
