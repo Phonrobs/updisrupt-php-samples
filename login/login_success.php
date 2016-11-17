@@ -1,3 +1,6 @@
+<?php 
+    session_start();
+?>
 <html>
 <head>
     <title>Login</title>
@@ -15,6 +18,46 @@
 <div class="container">
    <div class="jumbotron">
   <h1>Login Success!</h1>
+  <p>
+  <h3>Authorization Code:</h3>
+  <textarea class="form-control" rows="6" readonly>
+  <?php
+    include 'settings.php';
+
+    $access_token = $_SESSION["access_token"];
+
+    echo $access_token;    
+  ?>
+  </textarea>
+  </p>
+  <p>
+  <h3>Current User Information:</h3>
+  <?php 
+    // get user profile
+    $headers  = array(
+        "Authorization: Bearer ".$access_token,
+        "Content-Type: application/json;odata=minimalmetadata;streaming=true;charset=utf-8",
+        "Accept: application/json;odata=minimalmetadata"
+    );
+
+    $ch = curl_init();
+
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_URL, $graph_endpoint."/me?api-version=1.6");
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+    curl_setopt($ch, CURLOPT_HTTPGET, true);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    // post data to Azure AD server
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    $result = json_decode($response);
+
+    var_dump($response);
+  ?>
+  </p>
   <p><a class="btn btn-primary btn-lg" href="login.php" role="button">Back to login page</a></p>
 </div>
 </div>
